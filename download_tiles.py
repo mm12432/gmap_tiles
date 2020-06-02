@@ -44,24 +44,26 @@ def download_tiles(zoom,
                         req = urllib2.Request(url, data=None, headers=headers)
                         response = urllib2.urlopen(req)
                         bytes = response.read()
+
+
                     except Exception as e:
-                        print("--", filename, "->", e)
-                        sys.exit(1)
+                        print("error", filename, "->", e)
+                        continue
+                        # sys.exit(1)
                     #if bytes.startswith("<html>"):
                     #     print("-- forbidden", filename)
                     #     sys.exit(1)
                     print("-- saving", filename)
-
                     f = open(filename, 'wb')
                     f.write(bytes)
                     f.close()
 
-                    time.sleep(1 + random.random())
+                    # time.sleep(1 + random.random())
 
 
 if __name__ == "__main__":
 
-    zoom = range(1, 11)
+    zoom = range(8, 11)
 
     lat_start, lon_start = 85.05112877980659, -180
     lat_stop, lon_stop = -85.05112877980659, 180
