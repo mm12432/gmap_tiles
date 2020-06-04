@@ -45,7 +45,6 @@ def download_tiles(zoom,
                         response = urllib2.urlopen(req)
                         bytes = response.read()
 
-
                     except Exception as e:
                         print("error", filename, "->", e)
                         continue
@@ -62,15 +61,24 @@ def download_tiles(zoom,
 
 
 if __name__ == "__main__":
+    if len(sys.argv == 6):
+        try:
+            zoom = range(float(sys.argv[0]), float(sys.argv[1]))
+            lat_start, lon_start = float(sys.argv[2]), float(sys.argv[3])
+            lat_stop, lon_stop = float(sys.argv[4]), float(sys.argv[5])
+            # Google算法最大经纬度 纬度从北纬85.05112877980659°到南纬85.05112877980659°;经度从西经180°到东经180°;北纬,东经为+ 南纬,西经为-
+            '''
+            lat_start, lon_start = 85.05112877980659, -180
+            lat_stop, lon_stop = -85.05112877980659, 180
+            '''
+            download_tiles(zoom,
+                           lat_start,
+                           lat_stop,
+                           lon_start,
+                           lon_stop,
+                           satellite=False)
+        except Exception as identifier:
+            print("error", "->", identifier)
 
-    zoom = range(8, 11)
-
-    lat_start, lon_start = 85.05112877980659, -180
-    lat_stop, lon_stop = -85.05112877980659, 180
-
-    download_tiles(zoom,
-                   lat_start,
-                   lat_stop,
-                   lon_start,
-                   lon_stop,
-                   satellite=False)
+    else:
+        print("args length is wrong")
